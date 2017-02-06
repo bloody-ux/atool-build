@@ -37,6 +37,7 @@
     "babel-preset-es2015-ie": "^6.6.2",
     "babel-preset-react": "6.5.x",
     "babel-preset-stage-0": "6.5.x",
+    "case-sensitive-paths-webpack-plugin": "^1.1.4",
     "chalk": "^1.1.1",
     "commander": "~2.9.0",
     "css-loader": "~0.23.0",
