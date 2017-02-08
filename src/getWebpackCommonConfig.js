@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import getBabelCommonConfig from './getBabelCommonConfig';
 import getTSCommonConfig from './getTSCommonConfig';
 import { existsSync } from 'fs';
@@ -185,6 +186,7 @@ export default function getWebpackCommonConfig(args) {
         allChunks: true,
       }),
       new webpack.optimize.OccurenceOrderPlugin(),
+      new CaseSensitivePathsPlugin(),
     ],
   };
 }
