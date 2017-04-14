@@ -8,11 +8,7 @@ webpackJsonp([1,0],[
 
 	var _leftIcon2 = _interopRequireDefault(_leftIcon);
 
-	__webpack_require__(4);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	console.log(_leftIcon2.default);
 
 /***/ },
 /* 1 */
@@ -45,7 +41,7 @@ webpackJsonp([1,0],[
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Sniffr = __webpack_require__(5);
+	var Sniffr = __webpack_require__(4);
 
 	/**
 	 * List of SVG attributes to fix url target in them
@@ -315,12 +311,6 @@ webpackJsonp([1,0],[
 
 /***/ },
 /* 4 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 5 */
 /***/ function(module, exports) {
 
 	(function(host) {
