@@ -4,10 +4,6 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var _icon = __webpack_require__(6);
-
-	var _icon2 = _interopRequireDefault(_icon);
-
 	var _leftIcon = __webpack_require__(1);
 
 	var _leftIcon2 = _interopRequireDefault(_leftIcon);
@@ -16,7 +12,7 @@ webpackJsonp([1,0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	ReactDOM.render(React.createElement(_icon2.default, { glyph: _leftIcon2.default }));
+	console.log(_leftIcon2.default);
 
 /***/ },
 /* 1 */
@@ -446,39 +442,6 @@ webpackJsonp([1,0],[
 	  }
 	})(this);
 
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Icon;
-	function Icon(_ref) {
-	  var glyph = _ref.glyph,
-	      _ref$width = _ref.width,
-	      width = _ref$width === undefined ? 16 : _ref$width,
-	      _ref$height = _ref.height,
-	      height = _ref$height === undefined ? 16 : _ref$height,
-	      _ref$className = _ref.className,
-	      className = _ref$className === undefined ? 'icon' : _ref$className;
-
-	  return React.createElement(
-	    'svg',
-	    {
-	      className: className,
-	      width: width,
-	      height: height
-	    },
-	    React.createElement('use', {
-	      xlinkHref: glyph
-	    })
-	  );
-	}
-	module.exports = exports['default'];
 
 /***/ }
 ]);
