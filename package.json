@@ -51,6 +51,7 @@
     "postcss": "^5.0.19",
     "postcss-loader": "~0.8.0",
     "rucksack-css": "~0.8.5",
+    "svg-sprite-loader": "^0.3.0",
     "ts-loader": "^0.9.1",
     "typescript": "^2.0.3",
     "url-loader": "~0.5.6",

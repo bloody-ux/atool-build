@@ -94,4 +94,7 @@ describe('lib/build', function () {
   it('should support theme', () => {
     return testBuild({}, 'build-theme');
   });
+  it('should support svg sprite', () => {
+    return testBuild({}, 'build-svg-sprite');
+  });
 });
