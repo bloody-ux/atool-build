@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -10,18 +10,18 @@ webpackJsonp([1,0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 	var sprite = __webpack_require__(2);
 	var image = "<symbol viewBox=\"0 0 44 44\" id=\"left.icon\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <title>Operation Icons Copy 4</title> <g> <defs> <rect id=\"left.icon_SVGID_1_\" x=\"-129\" y=\"-845\" width=\"24\" height=\"24\"/> </defs> <clipPath id=\"left.icon_SVGID_2_\"> <use xlink:href=\"#left.icon_SVGID_1_\" overflow=\"visible\"/> </clipPath> <g clip-path=\"url(#left.icon_SVGID_2_)\"> <defs> <rect id=\"left.icon_SVGID_3_\" x=\"-903\" y=\"-949\" width=\"1850\" height=\"1945\"/> </defs> <clipPath id=\"left.icon_SVGID_4_\"> <use xlink:href=\"#left.icon_SVGID_3_\" overflow=\"visible\"/> </clipPath> <rect x=\"-134\" y=\"-850\" opacity=\"0\" clip-path=\"url(#left.icon_SVGID_4_)\" fill=\"#D8D8D8\" width=\"34\" height=\"34\"/> </g> </g> <polygon points=\"16.247,21.399 28.48,9.166 30.601,11.287 20.483,21.406 30.601,31.524 28.48,33.645 16.247,21.412 16.254,21.406\n\t\"/> </symbol>";
 	module.exports = sprite.add(image, "left.icon");
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var Sprite = __webpack_require__(3);
 	var globalSprite = new Sprite();
@@ -37,9 +37,9 @@ webpackJsonp([1,0],[
 	module.exports = globalSprite;
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var Sniffr = __webpack_require__(4);
 
@@ -309,9 +309,9 @@ webpackJsonp([1,0],[
 	module.exports = Sprite;
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	(function(host) {
 
@@ -433,5 +433,5 @@ webpackJsonp([1,0],[
 	})(this);
 
 
-/***/ }
+/***/ })
 ]);
