@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -12,12 +12,12 @@ webpackJsonp([1,0],[
 
 	console.log(_indexModule2.default.index);
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"index":"index___1Xnek","foo":"foo___26SGr"};
 
-/***/ }
+/***/ })
 ]);
