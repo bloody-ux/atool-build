@@ -45,7 +45,7 @@
     "file-loader": "~0.11.1",
     "json-loader": "~0.5.4",
     "less": "~2.7.2",
-    "less-loader": "~4.0.3",
+    "less-loader": "~2.2.3",
     "less-plugin-npm-import": "^2.1.0",
     "map-json-webpack-plugin": "~1.2.0",
     "postcss": "^5.2.17",
