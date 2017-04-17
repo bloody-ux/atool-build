@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -8,9 +8,9 @@ webpackJsonp([1,0],[
 
 	(0, _a.shout)();
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -24,5 +24,5 @@ webpackJsonp([1,0],[
 	};
 	module.exports = exports['default'];
 
-/***/ }
+/***/ })
 ]);
