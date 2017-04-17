@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -10,5 +10,5 @@ webpackJsonp([1,0],[
 	  "a"
 	));
 
-/***/ }
+/***/ })
 ]);

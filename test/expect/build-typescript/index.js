@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -23,5 +23,5 @@ webpackJsonp([1,0],[
 	var greeter = new Greeter('Hello, world!');
 	document.body.innerHTML = greeter.greet();
 
-/***/ }
+/***/ })
 ]);

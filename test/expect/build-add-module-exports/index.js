@@ -1,6 +1,6 @@
 webpackJsonp([1,0],[
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -12,9 +12,9 @@ webpackJsonp([1,0],[
 
 	console.log(_a2.default);
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -22,7 +22,7 @@ webpackJsonp([1,0],[
 	  value: true
 	});
 	exports.default = 1;
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
-/***/ }
+/***/ })
 ]);
