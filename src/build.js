@@ -20,7 +20,8 @@ function getWebpackConfig(args, cache) {
   }
 
   // Config if no --no-compress.
-  if (args.compress) {
+  // Watch mode should not use UglifyJsPlugin
+  if (args.compress && !args.watch) {
     webpackConfig.UglifyJsPluginConfig = {
       output: {
         ascii_only: true,
@@ -45,8 +46,14 @@ function getWebpackConfig(args, cache) {
     }
   }
 
+  // Watch mode should not use DedupePlugin
+  if (!args.watch) {
+    webpackConfig.plugins = [...webpackConfig.plugins,
+      new webpack.optimize.DedupePlugin(),
+    ];
+  }
+
   webpackConfig.plugins = [...webpackConfig.plugins,
-    new webpack.optimize.DedupePlugin(),
     new webpack.NoErrorsPlugin(),
   ];
 
