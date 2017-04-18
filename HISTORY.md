@@ -4,13 +4,13 @@
 
 ## 0.10.0
 
-  - `breaking`: 在 watch 模式下关闭 UglifyJsPlugin 和 DedupePlugin ，如果开启则会引起调试时不可预测的诡异问题。[#265](https://github.com/ant-tool/atool-build/issues/265)
- - `breaking`: 使用 url-loader 来处理 `eot` 字体文件（之前是 file-loader），并新增相关用例。https://github.com/ant-tool/atool-build/pull/266 
+- `breaking`: 在 watch 模式下关闭 UglifyJsPlugin 和 DedupePlugin ，如果开启则会引起调试时不可预测的诡异问题。[#265](https://github.com/ant-tool/atool-build/issues/265)
+- `breaking`: 使用 url-loader 来处理 `eot` 字体文件（之前是 file-loader），并新增相关用例。https://github.com/ant-tool/atool-build/pull/266 
 - `breaking`: 不再支持 node@6 以下，官方不再检查相关兼容性 https://github.com/ant-tool/atool-build/commit/5ccfca937c6353419ee1634666760714151ca8e2 
 - `feat`: 新增 svg-sprite-loader 来处理 svg sprite 需求，应用规则为 `*.icon.svg`
- - `feat`: 新增 case-sensitive-paths-webpack-plugin 避免在不同 os 平台下对 case 大小写支持问题  https://github.com/ant-tool/atool-build/pull/251
+- `feat`: 新增 case-sensitive-paths-webpack-plugin 避免在不同 os 平台下对 case 大小写支持问题  https://github.com/ant-tool/atool-build/pull/251
 - `feat`: 新增 denpendices.js 导出 atool-build 内置的依赖，诸如: ExtractTextPlugin https://github.com/ant-tool/atool-build/pull/264
- - `deps`: 升级所有 atool-build 内置依赖（包含 webpack 升级至 1.15.0 - 1 分支中最新版本）并逐个过了相关用例 https://github.com/ant-tool/atool-build/pull/263 
+- `deps`: 升级所有 atool-build 内置依赖（包含 webpack 升级至 1.15.0 - 1 分支中最新版本）并逐个过了相关用例 https://github.com/ant-tool/atool-build/pull/263
 - `fix`: 修复 ts 用例 https://github.com/ant-tool/atool-build/commit/83cccdaa9bdcf928c2ac712b5bceae6a328d05e5
 - `test`: 新增 autoprefix 相关用例 https://github.com/ant-tool/atool-build/pull/267
 
