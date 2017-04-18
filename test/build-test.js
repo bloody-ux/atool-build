@@ -97,4 +97,7 @@ describe('lib/build', function () {
   it('should support svg sprite', () => {
     return testBuild({}, 'build-svg-sprite');
   });
+  it('should support font', () => {
+    return testBuild({}, 'build-font');
+  });
 });
