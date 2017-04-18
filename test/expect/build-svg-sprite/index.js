@@ -4,7 +4,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var _leftIcon = __webpack_require__(1);
+	var _leftIcon = __webpack_require__(2);
 
 	var _leftIcon2 = _interopRequireDefault(_leftIcon);
 
@@ -12,18 +12,142 @@ webpackJsonp([1,0],[
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-	
-	var sprite = __webpack_require__(2);
-	var image = "<symbol viewBox=\"0 0 44 44\" id=\"left.icon\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <title>Operation Icons Copy 4</title> <g> <defs> <rect id=\"left.icon_SVGID_1_\" x=\"-129\" y=\"-845\" width=\"24\" height=\"24\"/> </defs> <clipPath id=\"left.icon_SVGID_2_\"> <use xlink:href=\"#left.icon_SVGID_1_\" overflow=\"visible\"/> </clipPath> <g clip-path=\"url(#left.icon_SVGID_2_)\"> <defs> <rect id=\"left.icon_SVGID_3_\" x=\"-903\" y=\"-949\" width=\"1850\" height=\"1945\"/> </defs> <clipPath id=\"left.icon_SVGID_4_\"> <use xlink:href=\"#left.icon_SVGID_3_\" overflow=\"visible\"/> </clipPath> <rect x=\"-134\" y=\"-850\" opacity=\"0\" clip-path=\"url(#left.icon_SVGID_4_)\" fill=\"#D8D8D8\" width=\"34\" height=\"34\"/> </g> </g> <polygon points=\"16.247,21.399 28.48,9.166 30.601,11.287 20.483,21.406 30.601,31.524 28.48,33.645 16.247,21.412 16.254,21.406\n\t\"/> </symbol>";
-	module.exports = sprite.add(image, "left.icon");
+	(function(host) {
+
+	  var properties = {
+	    browser: [
+	      [/msie ([\.\_\d]+)/, "ie"],
+	      [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
+	      [/firefox\/([\.\_\d]+)/, "firefox"],
+	      [/chrome\/([\.\_\d]+)/, "chrome"],
+	      [/version\/([\.\_\d]+).*?safari/, "safari"],
+	      [/mobile safari ([\.\_\d]+)/, "safari"],
+	      [/android.*?version\/([\.\_\d]+).*?safari/, "com.android.browser"],
+	      [/crios\/([\.\_\d]+).*?safari/, "chrome"],
+	      [/opera/, "opera"],
+	      [/opera\/([\.\_\d]+)/, "opera"],
+	      [/opera ([\.\_\d]+)/, "opera"],
+	      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
+	      [/opios\/([a-z\.\_\d]+)/, "opera"],
+	      [/blackberry/, "blackberry"],
+	      [/blackberry.*?version\/([\.\_\d]+)/, "blackberry"],
+	      [/bb\d+.*?version\/([\.\_\d]+)/, "blackberry"],
+	      [/rim.*?version\/([\.\_\d]+)/, "blackberry"],
+	      [/iceweasel\/([\.\_\d]+)/, "iceweasel"],
+	      [/edge\/([\.\d]+)/, "edge"]
+	    ],
+	    os: [
+	      [/linux ()([a-z\.\_\d]+)/, "linux"],
+	      [/mac os x/, "macos"],
+	      [/mac os x.*?([\.\_\d]+)/, "macos"],
+	      [/os ([\.\_\d]+) like mac os/, "ios"],
+	      [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
+	      [/android/, "android"],
+	      [/android ([a-z\.\_\d]+);/, "android"],
+	      [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"],
+	      [/windows\s*(?:nt)?\s*([\.\_\d]+)/, "windows"],
+	      [/windows phone.*?([\.\_\d]+)/, "windows.phone"],
+	      [/windows mobile/, "windows.mobile"],
+	      [/blackberry/, "blackberryos"],
+	      [/bb\d+/, "blackberryos"],
+	      [/rim.*?os\s*([\.\_\d]+)/, "blackberryos"]
+	    ],
+	    device: [
+	      [/ipad/, "ipad"],
+	      [/iphone/, "iphone"],
+	      [/lumia/, "lumia"],
+	      [/htc/, "htc"],
+	      [/nexus/, "nexus"],
+	      [/galaxy nexus/, "galaxy.nexus"],
+	      [/nokia/, "nokia"],
+	      [/ gt\-/, "galaxy"],
+	      [/ sm\-/, "galaxy"],
+	      [/xbox/, "xbox"],
+	      [/(?:bb\d+)|(?:blackberry)|(?: rim )/, "blackberry"]
+	    ]
+	  };
+
+	  var UNKNOWN = "Unknown";
+
+	  var propertyNames = Object.keys(properties);
+
+	  function Sniffr() {
+	    var self = this;
+
+	    propertyNames.forEach(function(propertyName) {
+	      self[propertyName] = {
+	        name: UNKNOWN,
+	        version: [],
+	        versionString: UNKNOWN
+	      };
+	    });
+	  }
+
+	  function determineProperty(self, propertyName, userAgent) {
+	    properties[propertyName].forEach(function(propertyMatcher) {
+	      var propertyRegex = propertyMatcher[0];
+	      var propertyValue = propertyMatcher[1];
+
+	      var match = userAgent.match(propertyRegex);
+
+	      if (match) {
+	        self[propertyName].name = propertyValue;
+
+	        if (match[2]) {
+	          self[propertyName].versionString = match[2];
+	          self[propertyName].version = [];
+	        } else if (match[1]) {
+	          self[propertyName].versionString = match[1].replace(/_/g, ".");
+	          self[propertyName].version = parseVersion(match[1]);
+	        } else {
+	          self[propertyName].versionString = UNKNOWN;
+	          self[propertyName].version = [];
+	        }
+	      }
+	    });
+	  }
+
+	  function parseVersion(versionString) {
+	    return versionString.split(/[\._]/).map(function(versionPart) {
+	      return parseInt(versionPart);
+	    });
+	  }
+
+	  Sniffr.prototype.sniff = function(userAgentString) {
+	    var self = this;
+	    var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
+
+	    propertyNames.forEach(function(propertyName) {
+	      determineProperty(self, propertyName, userAgent);
+	    });
+	  };
+
+
+	  if (typeof module !== 'undefined' && module.exports) {
+	    module.exports = Sniffr;
+	  } else {
+	    host.Sniffr = new Sniffr();
+	    host.Sniffr.sniff(navigator.userAgent);
+	  }
+	})(this);
+
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Sprite = __webpack_require__(3);
+	
+	var sprite = __webpack_require__(3);
+	var image = "<symbol viewBox=\"0 0 44 44\" id=\"left.icon\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <title>Operation Icons Copy 4</title> <g> <defs> <rect id=\"left.icon_SVGID_1_\" x=\"-129\" y=\"-845\" width=\"24\" height=\"24\"/> </defs> <clipPath id=\"left.icon_SVGID_2_\"> <use xlink:href=\"#left.icon_SVGID_1_\" overflow=\"visible\"/> </clipPath> <g clip-path=\"url(#left.icon_SVGID_2_)\"> <defs> <rect id=\"left.icon_SVGID_3_\" x=\"-903\" y=\"-949\" width=\"1850\" height=\"1945\"/> </defs> <clipPath id=\"left.icon_SVGID_4_\"> <use xlink:href=\"#left.icon_SVGID_3_\" overflow=\"visible\"/> </clipPath> <rect x=\"-134\" y=\"-850\" opacity=\"0\" clip-path=\"url(#left.icon_SVGID_4_)\" fill=\"#D8D8D8\" width=\"34\" height=\"34\"/> </g> </g> <polygon points=\"16.247,21.399 28.48,9.166 30.601,11.287 20.483,21.406 30.601,31.524 28.48,33.645 16.247,21.412 16.254,21.406\n\t\"/> </symbol>";
+	module.exports = sprite.add(image, "left.icon");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var Sprite = __webpack_require__(4);
 	var globalSprite = new Sprite();
 
 	if (document.body) {
@@ -38,10 +162,10 @@ webpackJsonp([1,0],[
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Sniffr = __webpack_require__(4);
+	var Sniffr = __webpack_require__(1);
 
 	/**
 	 * List of SVG attributes to fix url target in them
@@ -307,130 +431,6 @@ webpackJsonp([1,0],[
 	};
 
 	module.exports = Sprite;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-	(function(host) {
-
-	  var properties = {
-	    browser: [
-	      [/msie ([\.\_\d]+)/, "ie"],
-	      [/trident\/.*?rv:([\.\_\d]+)/, "ie"],
-	      [/firefox\/([\.\_\d]+)/, "firefox"],
-	      [/chrome\/([\.\_\d]+)/, "chrome"],
-	      [/version\/([\.\_\d]+).*?safari/, "safari"],
-	      [/mobile safari ([\.\_\d]+)/, "safari"],
-	      [/android.*?version\/([\.\_\d]+).*?safari/, "com.android.browser"],
-	      [/crios\/([\.\_\d]+).*?safari/, "chrome"],
-	      [/opera/, "opera"],
-	      [/opera\/([\.\_\d]+)/, "opera"],
-	      [/opera ([\.\_\d]+)/, "opera"],
-	      [/opera mini.*?version\/([\.\_\d]+)/, "opera.mini"],
-	      [/opios\/([a-z\.\_\d]+)/, "opera"],
-	      [/blackberry/, "blackberry"],
-	      [/blackberry.*?version\/([\.\_\d]+)/, "blackberry"],
-	      [/bb\d+.*?version\/([\.\_\d]+)/, "blackberry"],
-	      [/rim.*?version\/([\.\_\d]+)/, "blackberry"],
-	      [/iceweasel\/([\.\_\d]+)/, "iceweasel"],
-	      [/edge\/([\.\d]+)/, "edge"]
-	    ],
-	    os: [
-	      [/linux ()([a-z\.\_\d]+)/, "linux"],
-	      [/mac os x/, "macos"],
-	      [/mac os x.*?([\.\_\d]+)/, "macos"],
-	      [/os ([\.\_\d]+) like mac os/, "ios"],
-	      [/openbsd ()([a-z\.\_\d]+)/, "openbsd"],
-	      [/android/, "android"],
-	      [/android ([a-z\.\_\d]+);/, "android"],
-	      [/mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/, "firefoxos"],
-	      [/windows\s*(?:nt)?\s*([\.\_\d]+)/, "windows"],
-	      [/windows phone.*?([\.\_\d]+)/, "windows.phone"],
-	      [/windows mobile/, "windows.mobile"],
-	      [/blackberry/, "blackberryos"],
-	      [/bb\d+/, "blackberryos"],
-	      [/rim.*?os\s*([\.\_\d]+)/, "blackberryos"]
-	    ],
-	    device: [
-	      [/ipad/, "ipad"],
-	      [/iphone/, "iphone"],
-	      [/lumia/, "lumia"],
-	      [/htc/, "htc"],
-	      [/nexus/, "nexus"],
-	      [/galaxy nexus/, "galaxy.nexus"],
-	      [/nokia/, "nokia"],
-	      [/ gt\-/, "galaxy"],
-	      [/ sm\-/, "galaxy"],
-	      [/xbox/, "xbox"],
-	      [/(?:bb\d+)|(?:blackberry)|(?: rim )/, "blackberry"]
-	    ]
-	  };
-
-	  var UNKNOWN = "Unknown";
-
-	  var propertyNames = Object.keys(properties);
-
-	  function Sniffr() {
-	    var self = this;
-
-	    propertyNames.forEach(function(propertyName) {
-	      self[propertyName] = {
-	        name: UNKNOWN,
-	        version: [],
-	        versionString: UNKNOWN
-	      };
-	    });
-	  }
-
-	  function determineProperty(self, propertyName, userAgent) {
-	    properties[propertyName].forEach(function(propertyMatcher) {
-	      var propertyRegex = propertyMatcher[0];
-	      var propertyValue = propertyMatcher[1];
-
-	      var match = userAgent.match(propertyRegex);
-
-	      if (match) {
-	        self[propertyName].name = propertyValue;
-
-	        if (match[2]) {
-	          self[propertyName].versionString = match[2];
-	          self[propertyName].version = [];
-	        } else if (match[1]) {
-	          self[propertyName].versionString = match[1].replace(/_/g, ".");
-	          self[propertyName].version = parseVersion(match[1]);
-	        } else {
-	          self[propertyName].versionString = UNKNOWN;
-	          self[propertyName].version = [];
-	        }
-	      }
-	    });
-	  }
-
-	  function parseVersion(versionString) {
-	    return versionString.split(/[\._]/).map(function(versionPart) {
-	      return parseInt(versionPart);
-	    });
-	  }
-
-	  Sniffr.prototype.sniff = function(userAgentString) {
-	    var self = this;
-	    var userAgent = (userAgentString || navigator.userAgent || "").toLowerCase();
-
-	    propertyNames.forEach(function(propertyName) {
-	      determineProperty(self, propertyName, userAgent);
-	    });
-	  };
-
-
-	  if (typeof module !== 'undefined' && module.exports) {
-	    module.exports = Sniffr;
-	  } else {
-	    host.Sniffr = new Sniffr();
-	    host.Sniffr.sniff(navigator.userAgent);
-	  }
-	})(this);
 
 
 /***/ })
