@@ -157,7 +157,9 @@ export default function getWebpackCommonConfig(args) {
           loader: `${require.resolve('url-loader')}?` +
           `limit=10000&minetype=application/octet-stream`,
         },
-        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: `${require.resolve('file-loader')}` },
+        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: `${require.resolve('url-loader')}?` +
+        `limit=10000&minetype=application/vnd.ms-fontobject`,
+        },
         {
           test(filePath) {
             return /\.svg$/.test(filePath) && !/\.icon\.svg/.test(filePath);
