@@ -100,4 +100,7 @@ describe('lib/build', function () {
   it('should support font', () => {
     return testBuild({}, 'build-font');
   });
+  it('should support autoprefix', () => {
+    return testBuild({}, 'build-autoprefix');
+  });
 });
