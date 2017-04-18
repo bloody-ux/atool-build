@@ -159,9 +159,15 @@ export default function getWebpackCommonConfig(args) {
         },
         { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: `${require.resolve('file-loader')}` },
         {
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          test(filePath) {
+            return /\.svg$/.test(filePath) && !/\.icon\.svg/.test(filePath);
+          },
           loader: `${require.resolve('url-loader')}?` +
           `limit=10000&minetype=image/svg+xml`,
+        },
+        {
+          test: /\.icon\.svg$/,
+          loader: `${require.resolve('svg-sprite-loader')}`,
         },
         {
           test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
