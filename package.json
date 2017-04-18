@@ -1,6 +1,6 @@
 {
   "name": "atool-build",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Build tool based on webpack",
   "repository": {
     "type": "git",
