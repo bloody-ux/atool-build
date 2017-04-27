@@ -161,15 +161,9 @@ export default function getWebpackCommonConfig(args) {
         `limit=10000&minetype=application/vnd.ms-fontobject`,
         },
         {
-          test(filePath) {
-            return /\.svg$/.test(filePath) && !/\.icon\.svg/.test(filePath);
-          },
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           loader: `${require.resolve('url-loader')}?` +
           `limit=10000&minetype=image/svg+xml`,
-        },
-        {
-          test: /\.icon\.svg$/,
-          loader: `${require.resolve('svg-sprite-loader')}`,
         },
         {
           test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,

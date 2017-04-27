@@ -94,13 +94,13 @@ describe('lib/build', function () {
   it('should support theme', () => {
     return testBuild({}, 'build-theme');
   });
-  it('should support svg sprite', () => {
-    return testBuild({}, 'build-svg-sprite');
-  });
   it('should support font', () => {
     return testBuild({}, 'build-font');
   });
   it('should support autoprefix', () => {
     return testBuild({}, 'build-autoprefix');
+  });
+  it('should support common', () => {
+    return testBuild({}, 'build-common');
   });
 });
