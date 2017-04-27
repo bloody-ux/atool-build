@@ -103,4 +103,7 @@ describe('lib/build', function () {
   it('should support common', () => {
     return testBuild({}, 'build-common');
   });
+  it('should support svg', () => {
+    return testBuild({}, 'build-svg');
+  });
 });
