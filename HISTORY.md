@@ -2,6 +2,11 @@
 
 ---
 
+## 0.10.1
+
+- `revert`: 回滚 svg-sprite-loader
+- `test`: 补充用例 svg 和 common
+
 ## 0.10.0
 
 - `breaking`: 在 watch 模式下关闭 UglifyJsPlugin 和 DedupePlugin ，如果开启则会引起调试时不可预测的诡异问题。[#265](https://github.com/ant-tool/atool-build/issues/265)
