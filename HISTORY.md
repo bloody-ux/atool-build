@@ -2,6 +2,11 @@
 
 ---
 
+## 0.11.0
+
+- feat: friendly error https://github.com/ant-tool/atool-build/pull/271
+- fix: lint error https://github.com/ant-tool/atool-build/pull/272
+
 ## 0.10.1
 
 - `revert`: 回滚 svg-sprite-loader
