@@ -87,22 +87,22 @@ export default function build(args, callback) {
     fileOutputPath = config.output.path;
   });
 
-  if (args.watch) {
-    webpackConfig.forEach((config) => {
-      config.plugins.push(
-        new ProgressPlugin((percentage, msg) => {
-          const stream = process.stderr;
-          if (stream.isTTY && percentage < 0.71) {
-            stream.cursorTo(0);
-            stream.write(`📦  ${chalk.magenta(msg)}`);
-            stream.clearLine(1);
-          } else if (percentage === 1) {
-            console.log(chalk.green('\nwebpack: bundle build is now finished.'));
-          }
-        }),
-      );
-    });
-  }
+
+  webpackConfig.forEach((config) => {
+    config.plugins.push(
+      new ProgressPlugin((percentage, msg) => {
+        const stream = process.stderr;
+        if (stream.isTTY && percentage < 0.71) {
+          stream.cursorTo(0);
+          stream.write(`📦  ${chalk.magenta(msg)}`);
+          stream.clearLine(1);
+        } else if (percentage === 1) {
+          console.log(chalk.green('\nwebpack: bundle build is now finished.'));
+        }
+      }),
+    );
+  });
+
 
   function doneHandler(err, stats) {
     if (args.json) {
