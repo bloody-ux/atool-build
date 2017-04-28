@@ -1,14 +1,15 @@
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
-import getBabelCommonConfig from './getBabelCommonConfig';
-import getTSCommonConfig from './getTSCommonConfig';
 import { existsSync } from 'fs';
 import { join, resolve } from 'path';
 import rucksack from 'rucksack-css';
 import autoprefixer from 'autoprefixer';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import notifier from 'node-notifier';
+
+import getBabelCommonConfig from './getBabelCommonConfig';
+import getTSCommonConfig from './getTSCommonConfig';
 
 /* eslint quotes:0 */
 
@@ -25,7 +26,7 @@ export default function getWebpackCommonConfig(args) {
   tsQuery.declaration = false;
 
   let theme = {};
-  if (pkg.theme && typeof(pkg.theme) === 'string') {
+  if (pkg.theme && typeof pkg.theme === 'string') {
     let cfgPath = pkg.theme;
     // relative path
     if (cfgPath.charAt(0) === '.') {
@@ -33,7 +34,7 @@ export default function getWebpackCommonConfig(args) {
     }
     const getThemeConfig = require(cfgPath);
     theme = getThemeConfig();
-  } else if (pkg.theme && typeof(pkg.theme) === 'object') {
+  } else if (pkg.theme && typeof pkg.theme === 'object') {
     theme = pkg.theme;
   }
 
@@ -113,7 +114,7 @@ export default function getWebpackCommonConfig(args) {
           },
           loader: ExtractTextPlugin.extract(
             `${require.resolve('css-loader')}` +
-            `?sourceMap&-restructuring&-autoprefixer!${require.resolve('postcss-loader')}`
+            `?sourceMap&-restructuring&-autoprefixer!${require.resolve('postcss-loader')}`,
           ),
         },
         {
@@ -121,7 +122,7 @@ export default function getWebpackCommonConfig(args) {
           loader: ExtractTextPlugin.extract(
             `${require.resolve('css-loader')}` +
             `?sourceMap&-restructuring&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!` +
-            `${require.resolve('postcss-loader')}`
+            `${require.resolve('postcss-loader')}`,
           ),
         },
         {
@@ -131,7 +132,7 @@ export default function getWebpackCommonConfig(args) {
           loader: ExtractTextPlugin.extract(
             `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
             `${require.resolve('postcss-loader')}!` +
-            `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
+            `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`,
           ),
         },
         {
@@ -141,7 +142,7 @@ export default function getWebpackCommonConfig(args) {
             `sourceMap&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!` +
             `${require.resolve('postcss-loader')}!` +
             `${require.resolve('less-loader')}?` +
-            `{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
+            `{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`,
           ),
         },
         {
@@ -159,7 +160,8 @@ export default function getWebpackCommonConfig(args) {
           loader: `${require.resolve('url-loader')}?` +
           `limit=10000&minetype=application/octet-stream`,
         },
-        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: `${require.resolve('url-loader')}?` +
+        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+          loader: `${require.resolve('url-loader')}?` +
         `limit=10000&minetype=application/vnd.ms-fontobject`,
         },
         {
@@ -171,8 +173,14 @@ export default function getWebpackCommonConfig(args) {
           test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
           loader: `${require.resolve('url-loader')}?limit=10000`,
         },
-        { test: /\.json$/, loader: `${require.resolve('json-loader')}` },
-        { test: /\.html?$/, loader: `${require.resolve('file-loader')}?name=[name].[ext]` },
+        {
+          test: /\.json$/,
+          loader: `${require.resolve('json-loader')}`,
+        },
+        {
+          test: /\.html?$/,
+          loader: `${require.resolve('file-loader')}?name=[name].[ext]`,
+        },
       ],
     },
 
@@ -210,7 +218,7 @@ export default function getWebpackCommonConfig(args) {
             contentImage: join(__dirname, '../assets/fail.png'),
             sound: 'Glass',
           });
-        }
+        },
       }),
     ],
   };

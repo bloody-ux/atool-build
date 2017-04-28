@@ -23,7 +23,7 @@ function transformLess(lessFile, config = {}) {
       ],
     };
     less.render(data, lessOpts)
-      .then(result => {
+      .then((result) => {
         // Do postcss compile
         const plugins = [
           rucksack(),
@@ -35,14 +35,14 @@ function transformLess(lessFile, config = {}) {
         const postcssOpts = {};
 
         postcss(plugins).process(source, postcssOpts)
-          .then(r => {
+          .then((r) => {
             resolve(r.css);
           })
-          .catch(err => {
+          .catch((err) => {
             reject(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err);
       });
   });
