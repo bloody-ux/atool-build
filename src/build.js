@@ -4,6 +4,7 @@ import webpack, { ProgressPlugin } from 'webpack';
 import chalk from 'chalk';
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
+import notifier from 'node-notifier';
 
 function getWebpackConfig(args, cache) {
   let webpackConfig = getWebpackCommonConfig(args);
@@ -134,6 +135,13 @@ export default function build(args, callback) {
         console.error(buildInfo);
       } else {
         console.log(buildInfo);
+        notifier.notify({
+          title: 'ant tool',
+          message:'done',
+          subtitle: 'build successfully',
+          contentImage: join(__dirname, '../assets/success.png'),
+          sound: 'Glass',
+        });
       }
     }
 
