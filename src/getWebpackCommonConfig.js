@@ -7,6 +7,8 @@ import { existsSync } from 'fs';
 import { join, resolve } from 'path';
 import rucksack from 'rucksack-css';
 import autoprefixer from 'autoprefixer';
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+import notifier from 'node-notifier';
 
 /* eslint quotes:0 */
 
@@ -189,6 +191,27 @@ export default function getWebpackCommonConfig(args) {
       }),
       new webpack.optimize.OccurenceOrderPlugin(),
       new CaseSensitivePathsPlugin(),
+      new FriendlyErrorsWebpackPlugin({
+        onErrors: (severity, errors) => {
+          if (severity !== 'error') {
+            notifier.notify({
+              title: 'ant tool',
+              message: 'warn',
+              contentImage: join(__dirname, '../assets/warn.png'),
+              sound: 'Glass',
+            });
+            return;
+          }
+          const error = errors[0];
+          notifier.notify({
+            title: 'ant tool',
+            message: `${severity} : ${error.name}`,
+            subtitle: error.file || '',
+            contentImage: join(__dirname, '../assets/fail.png'),
+            sound: 'Glass',
+          });
+        }
+      }),
     ],
   };
 }
