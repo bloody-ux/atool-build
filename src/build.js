@@ -2,9 +2,9 @@ import { join, resolve } from 'path';
 import { writeFileSync } from 'fs';
 import webpack, { ProgressPlugin } from 'webpack';
 import chalk from 'chalk';
+import notifier from 'node-notifier';
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
-import notifier from 'node-notifier';
 
 function getWebpackConfig(args, cache) {
   let webpackConfig = getWebpackCommonConfig(args);
@@ -38,13 +38,11 @@ function getWebpackConfig(args, cache) {
       }),
     ];
   } else {
-    if (process.env.NODE_ENV) {
-      webpackConfig.plugins = [...webpackConfig.plugins,
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        }),
-      ];
-    }
+    webpackConfig.plugins = [...webpackConfig.plugins,
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      }),
+    ];
   }
 
   // Watch mode should not use DedupePlugin
@@ -61,7 +59,8 @@ function getWebpackConfig(args, cache) {
   // Output map.json if hash.
   if (args.hash) {
     const pkg = require(join(args.cwd, 'package.json'));
-    webpackConfig.output.filename = webpackConfig.output.chunkFilename = '[name]-[chunkhash].js';
+    webpackConfig.output.filename = '[name]-[chunkhash].js';
+    webpackConfig.output.chunkFilename = '[name]-[chunkhash].js';
     webpackConfig.plugins = [...webpackConfig.plugins,
       require('map-json-webpack-plugin')({
         assetsPath: pkg.name,
@@ -84,12 +83,12 @@ export default function build(args, callback) {
   webpackConfig = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
 
   let fileOutputPath;
-  webpackConfig.forEach(config => {
+  webpackConfig.forEach((config) => {
     fileOutputPath = config.output.path;
   });
 
   if (args.watch) {
-    webpackConfig.forEach(config => {
+    webpackConfig.forEach((config) => {
       config.plugins.push(
         new ProgressPlugin((percentage, msg) => {
           const stream = process.stderr;
@@ -100,7 +99,7 @@ export default function build(args, callback) {
           } else if (percentage === 1) {
             console.log(chalk.green('\nwebpack: bundle build is now finished.'));
           }
-        })
+        }),
       );
     });
   }
@@ -137,7 +136,7 @@ export default function build(args, callback) {
         console.log(buildInfo);
         notifier.notify({
           title: 'ant tool',
-          message:'done',
+          message: 'done',
           subtitle: 'build successfully',
           contentImage: join(__dirname, '../assets/success.png'),
           sound: 'Glass',
