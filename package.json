@@ -14,7 +14,8 @@
   },
   "files": [
     "bin",
-    "lib"
+    "lib",
+    "assets"
   ],
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib",
