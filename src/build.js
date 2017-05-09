@@ -6,6 +6,16 @@ import notifier from 'node-notifier';
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
 
+function checkConfig(webpackConfig) {
+  const config = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
+  const hasEmptyEntry = config.some(c => Object.keys(c.entry || {}).length === 0);
+  if (hasEmptyEntry) {
+    const err = new Error('no webpack entry found');
+    err.name = 'NoEntry';
+    throw err;
+  }
+}
+
 function getWebpackConfig(args, cache) {
   let webpackConfig = getWebpackCommonConfig(args);
 
@@ -74,6 +84,7 @@ function getWebpackConfig(args, cache) {
   } else {
     webpackConfig = mergeCustomConfig(webpackConfig, resolve(args.cwd, args.config || 'webpack.config.js'));
   }
+  checkConfig(webpackConfig);
   return webpackConfig;
 }
 
