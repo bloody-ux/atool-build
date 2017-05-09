@@ -106,4 +106,11 @@ describe('lib/build', function () {
   it('should support svg', () => {
     return testBuild({}, 'build-svg');
   });
+  it('should throw error', () => {
+    return testBuild({}, 'build-no-entry')
+      .catch((err) => {
+        expect(err.name).toEqual('NoEntry');
+        expect(err.message).toEqual('no webpack entry found');
+      });
+  });
 });
