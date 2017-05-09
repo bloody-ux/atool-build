@@ -2,6 +2,10 @@
 
 ---
 
+## 0.11.1
+
+- enhancement: throw a message when webpack entry is empty
+
 ## 0.11.0
 
 - feat: friendly error https://github.com/ant-tool/atool-build/pull/271
