@@ -145,13 +145,15 @@ export default function build(args, callback) {
         console.error(buildInfo);
       } else {
         console.log(buildInfo);
-        notifier.notify({
-          title: 'ant tool',
-          message: 'done',
-          subtitle: 'build successfully',
-          contentImage: join(__dirname, '../assets/success.png'),
-          sound: 'Glass',
-        });
+        if (args.silent !== true) {
+          notifier.notify({
+            title: 'ant tool',
+            message: 'done',
+            subtitle: 'build successfully',
+            contentImage: join(__dirname, '../assets/success.png'),
+            sound: 'Glass',
+          });
+        }
       }
     }
 

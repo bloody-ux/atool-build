@@ -10,8 +10,9 @@ program
   .option('--publicPath <publicPath>', 'publicPath for webpack')
   .option('--devtool <devtool>', 'sourcemap generate method, default is null')
   .option('--config <path>', 'custom config path, default is webpack.config.js')
-  .option('--no-compress','build without compress')
-  .option('--json','running webpack with --json, ex. result.json')
+  .option('--no-compress', 'build without compress')
+  .option('--silent', 'close notifier')
+  .option('--json', 'running webpack with --json, ex. result.json')
   .option('--verbose', 'run with more logging messages.')
   .parse(process.argv);
 

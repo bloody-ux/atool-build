@@ -48,6 +48,7 @@ $ atool-build -h
     --devtool <devtool>       sourcemap generate method, default is null
     --config <path>           custom config path, default is webpack.config.js
     --no-compress             build without compress 
+    --silent                  build without notify
 ```
 
 ### 配置扩展
