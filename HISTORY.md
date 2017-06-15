@@ -2,6 +2,10 @@
 
 ---
 
+## 1.0.0
+
+- feature: silent for notification https://github.com/ant-tool/atool-build/pull/303
+
 ## 0.11.1
 
 - enhancement: throw a message when webpack entry is empty
