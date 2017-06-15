@@ -113,4 +113,7 @@ describe('lib/build', function () {
         expect(err.message).toEqual('no webpack entry found');
       });
   });
+  it('should support silent', () => {
+    return testBuild({ hash: true, silent: true }, 'build-normal');
+  });
 });

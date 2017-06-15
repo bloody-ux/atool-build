@@ -21,6 +21,7 @@ export default function getWebpackCommonConfig(args) {
   const cssFileName = args.hash ? '[name]-[chunkhash].css' : '[name].css';
   const commonName = args.hash ? 'common-[chunkhash].js' : 'common.js';
 
+  const silent = args.silent === true;
   const babelQuery = getBabelCommonConfig();
   const tsQuery = getTSCommonConfig();
   tsQuery.declaration = false;
@@ -201,6 +202,7 @@ export default function getWebpackCommonConfig(args) {
       new CaseSensitivePathsPlugin(),
       new FriendlyErrorsWebpackPlugin({
         onErrors: (severity, errors) => {
+          if (silent) return;
           if (severity !== 'error') {
             notifier.notify({
               title: 'ant tool',
