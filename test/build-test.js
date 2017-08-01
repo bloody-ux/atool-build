@@ -116,7 +116,4 @@ describe('lib/build', function () {
   it('should support silent', () => {
     return testBuild({ hash: true, silent: true }, 'build-normal');
   });
-  it('should convert chinese to unicode', () => {
-    return testBuild({}, 'build-chinese');
-  });
 });

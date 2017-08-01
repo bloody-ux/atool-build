@@ -97,17 +97,13 @@ export default function getWebpackCommonConfig(args) {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loaders: [
-            `${require.resolve('babel-loader')}?${JSON.stringify(babelQuery)}`,
-            require.resolve('unicode-loader'),
-          ],
+          loader: require.resolve('babel-loader'),
+          query: babelQuery,
         },
         {
           test: /\.jsx$/,
-          loaders: [
-            `${require.resolve('babel-loader')}?${JSON.stringify(babelQuery)}`,
-            require.resolve('unicode-loader'),
-          ],
+          loader: require.resolve('babel-loader'),
+          query: babelQuery,
         },
         {
           test: /\.tsx?$/,
