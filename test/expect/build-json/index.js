@@ -16,11 +16,7 @@ webpackJsonp([1,0],[
 /* 1 */
 /***/ (function(module, exports) {
 
-	module.exports = {
-		"entry": {
-			"index": "./index.js"
-		}
-	};
+	module.exports = {"entry":{"index":"./index.js"}}
 
 /***/ })
 ]);
