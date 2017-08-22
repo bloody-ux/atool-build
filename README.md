@@ -15,7 +15,7 @@
 - 基于 webpack 实现
 - 支持通过 `webpack.config.js` 进行扩展 webpack 的配置项
 - 支持 [stage-0](https://babeljs.io/docs/plugins/preset-stage-0), [es2015](https://babeljs.io/docs/plugins/preset-es2015), react 和 less
-- 支持 hash 模式的构建, 并生成映射表 `map.json`  
+- 支持 hash 模式的构建, 并生成映射表 `map.json`
 - 支持 typescript
 
 ## 安装
@@ -34,11 +34,11 @@ $ atool-build [options]
 
 ```bash
 $ atool-build -h
-  
+
   Usage: atool-build [options]
-  
+
   Options:
-  
+
     -h, --help                output usage information
     -v, --version             output the version number
     -o, --output-path <path>  output path
@@ -47,7 +47,7 @@ $ atool-build -h
     --publicPath <publicPath> webpack publicPath
     --devtool <devtool>       sourcemap generate method, default is null
     --config <path>           custom config path, default is webpack.config.js
-    --no-compress             build without compress 
+    --no-compress             build without compress
     --silent                  build without notify
 ```
 
@@ -76,8 +76,20 @@ module.exports = function(webpackConfig) {
 
 ## FAQ
 
-> 如何在 webpack.config.js 中引用 webpack ? (新增插件需要) 
+> 如何在 webpack.config.js 中引用 webpack ? (新增插件需要)
 
 `var webpack = require('atool-build/lib/webpack');`
 
 [#32](https://github.com/ant-tool/atool-build/issues/32)
+
+> 为什么 TypeScript 错误不会显示？
+
+在 `webpack.config.js` 中配置：
+
+```javascript
+module.exports = function(webpack) {
+  webpack.ts.transpileOnly = false;
+}
+```
+
+关闭这个选项后如果项目较大，构建速度会变慢，可以在开发环境打开，发布的时候再关闭。
