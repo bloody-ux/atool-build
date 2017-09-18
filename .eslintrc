@@ -1,6 +1,9 @@
 {
   "extends": "eslint-config-airbnb/base",
   "parser": "babel-eslint",
+  "env": {
+    "mocha": true
+  },
   "rules": {
     "no-console": [0],
     "space-before-function-paren": [2, "never"],

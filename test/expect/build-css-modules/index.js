@@ -1,23 +1,24 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+"use strict";
 
-	var _indexModule = __webpack_require__(1);
 
-	var _indexModule2 = _interopRequireDefault(_indexModule);
+var _indexModule = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _indexModule2 = _interopRequireDefault(_indexModule);
 
-	console.log(_indexModule2.default.index);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log(_indexModule2.default.index);
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
-	module.exports = {"index":"index___1Xnek","foo":"foo___26SGr"};
+// removed by extract-text-webpack-plugin
+module.exports = {"index":"index___1Xnek","foo":"foo___26SGr"};
 
 /***/ })
-]);
+],[0]);

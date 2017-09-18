@@ -1,23 +1,24 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+"use strict";
 
-	var _dec, _class;
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _dec, _class;
 
-	var calls = [];
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function dec(id) {
-	  calls.push(id);
-	  return function () {};
-	}
+var calls = [];
 
-	var Example = (_dec = dec(1), _dec(_class = function Example() {
-	  _classCallCheck(this, Example);
-	}) || _class);
+function dec(id) {
+  calls.push(id);
+  return function () {};
+}
+
+var Example = (_dec = dec(1), _dec(_class = function Example() {
+  _classCallCheck(this, Example);
+}) || _class);
 
 /***/ })
-]);
+],[0]);

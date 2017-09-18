@@ -1,28 +1,30 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+"use strict";
 
-	var _a = __webpack_require__(1);
 
-	var _a2 = _interopRequireDefault(_a);
+var _a = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _a2 = _interopRequireDefault(_a);
 
-	console.log(_a2.default);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log(_a2.default);
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = 1;
-	module.exports = exports["default"];
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = 1;
+module.exports = exports["default"];
 
 /***/ })
-]);
+],[0]);

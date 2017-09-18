@@ -5,8 +5,7 @@ webpackJsonp([0],[
 "use strict";
 
 
-console.log("Hallo Welt");
-console.log("Missing Text");
+console.log(1);
 
 /***/ })
 ],[0]);

@@ -1,27 +1,28 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+"use strict";
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Greeter = function () {
-	    function Greeter(greeting) {
-	        _classCallCheck(this, Greeter);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	        this.greeting = greeting;
-	    }
+var Greeter = function () {
+    function Greeter(greeting) {
+        _classCallCheck(this, Greeter);
 
-	    Greeter.prototype.greet = function greet() {
-	        return '<h1>' + this.greeting + '</h1>';
-	    };
+        this.greeting = greeting;
+    }
 
-	    return Greeter;
-	}();
+    Greeter.prototype.greet = function greet() {
+        return '<h1>' + this.greeting + '</h1>';
+    };
 
-	var greeter = new Greeter('Hello, world!');
-	document.body.innerHTML = greeter.greet();
+    return Greeter;
+}();
+
+var greeter = new Greeter('Hello, world!');
+document.body.innerHTML = greeter.greet();
 
 /***/ })
-]);
+],[0]);

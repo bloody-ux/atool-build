@@ -1,14 +1,15 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+"use strict";
 
-	ReactDOM.render(React.createElement(
-	  "div",
-	  null,
-	  "a"
-	));
+
+ReactDOM.render(React.createElement(
+  "div",
+  null,
+  "a"
+));
 
 /***/ })
-]);
+],[0]);

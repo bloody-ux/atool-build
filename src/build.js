@@ -33,16 +33,15 @@ function getWebpackConfig(args, cache) {
   // Config if no --no-compress.
   // Watch mode should not use UglifyJsPlugin
   if (args.compress && !args.watch) {
-    webpackConfig.UglifyJsPluginConfig = {
-      output: {
-        ascii_only: true,
-      },
-      compress: {
-        warnings: false,
-      },
-    };
     webpackConfig.plugins = [...webpackConfig.plugins,
-      new webpack.optimize.UglifyJsPlugin(webpackConfig.UglifyJsPluginConfig),
+      new webpack.optimize.UglifyJsPlugin({
+        output: {
+          ascii_only: true,
+        },
+        compress: {
+          warnings: false,
+        },
+      }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
       }),
@@ -55,15 +54,8 @@ function getWebpackConfig(args, cache) {
     ];
   }
 
-  // Watch mode should not use DedupePlugin
-  if (!args.watch) {
-    webpackConfig.plugins = [...webpackConfig.plugins,
-      new webpack.optimize.DedupePlugin(),
-    ];
-  }
-
   webpackConfig.plugins = [...webpackConfig.plugins,
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ];
 
   // Output map.json if hash.

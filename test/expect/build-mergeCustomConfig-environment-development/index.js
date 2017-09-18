@@ -1,10 +1,11 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+"use strict";
 
-	console.log(("development"));
+
+console.log("development");
 
 /***/ })
-]);
+],[0]);

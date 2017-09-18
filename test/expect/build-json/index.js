@@ -1,22 +1,23 @@
-webpackJsonp([1,0],[
+webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+"use strict";
 
-	var _package = __webpack_require__(1);
 
-	var _package2 = _interopRequireDefault(_package);
+var _package = __webpack_require__(1);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _package2 = _interopRequireDefault(_package);
 
-	console.log(_package2.default);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log(_package2.default);
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-	module.exports = {"entry":{"index":"./index.js"}}
+module.exports = {"entry":{"index":"./index.js"}}
 
 /***/ })
-]);
+],[0]);

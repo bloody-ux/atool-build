@@ -26,6 +26,15 @@ export default function getWebpackCommonConfig(args) {
   const tsQuery = getTSCommonConfig();
   tsQuery.declaration = false;
 
+  const postcssOptions = {
+    plugins: [
+      rucksack(),
+      autoprefixer({
+        browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+      }),
+    ],
+  };
+
   let theme = {};
   if (pkg.theme && typeof pkg.theme === 'string') {
     let cfgPath = pkg.theme;
@@ -61,15 +70,7 @@ export default function getWebpackCommonConfig(args) {
     return obj;
   }, {});
 
-
   return {
-
-    babel: babelQuery,
-    ts: {
-      transpileOnly: true,
-      compilerOptions: tsQuery,
-    },
-
     output: {
       path: join(process.cwd(), './dist/'),
       filename: jsFileName,
@@ -79,12 +80,8 @@ export default function getWebpackCommonConfig(args) {
     devtool: args.devtool,
 
     resolve: {
-      modulesDirectories: ['node_modules', join(__dirname, '../node_modules')],
-      extensions: ['', '.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json'],
-    },
-
-    resolveLoader: {
-      modulesDirectories: ['node_modules', join(__dirname, '../node_modules')],
+      modules: ['node_modules', join(__dirname, '../node_modules')],
+      extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json'],
     },
 
     entry: pkg.entry,
@@ -93,112 +90,185 @@ export default function getWebpackCommonConfig(args) {
 
     module: {
       noParse: [/moment.js/],
-      loaders: [
+      rules: [
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: require.resolve('babel-loader'),
-          query: babelQuery,
-        },
-        {
-          test: /\.jsx$/,
-          loader: require.resolve('babel-loader'),
-          query: babelQuery,
+          loader: 'babel-loader',
+          options: babelQuery,
         },
         {
           test: /\.tsx?$/,
-          loaders: [require.resolve('babel-loader'), require.resolve('ts-loader')],
+          use: [
+            {
+              loader: 'babel-loader',
+              options: babelQuery,
+            },
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+                compilerOptions: tsQuery,
+              },
+            },
+          ],
         },
         {
           test(filePath) {
             return /\.css$/.test(filePath) && !/\.module\.css$/.test(filePath);
           },
-          loader: ExtractTextPlugin.extract(
-            `${require.resolve('css-loader')}` +
-            `?sourceMap&-restructuring&-autoprefixer!${require.resolve('postcss-loader')}`,
-          ),
+          use: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: postcssOptions,
+              },
+            ],
+          }),
         },
         {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(
-            `${require.resolve('css-loader')}` +
-            `?sourceMap&-restructuring&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!` +
-            `${require.resolve('postcss-loader')}`,
-          ),
+          use: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: true,
+                  localIdentName: '[local]___[hash:base64:5]',
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: postcssOptions,
+              },
+            ],
+          }),
         },
         {
           test(filePath) {
             return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
           },
-          loader: ExtractTextPlugin.extract(
-            `${require.resolve('css-loader')}?sourceMap&-autoprefixer!` +
-            `${require.resolve('postcss-loader')}!` +
-            `${require.resolve('less-loader')}?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`,
-          ),
+          use: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: postcssOptions,
+              },
+              {
+                loader: 'less-loader',
+                options: {
+                  sourceMap: true,
+                  modifyVars: theme,
+                },
+              },
+            ],
+          }),
         },
         {
           test: /\.module\.less$/,
-          loader: ExtractTextPlugin.extract(
-            `${require.resolve('css-loader')}?` +
-            `sourceMap&modules&localIdentName=[local]___[hash:base64:5]&-autoprefixer!` +
-            `${require.resolve('postcss-loader')}!` +
-            `${require.resolve('less-loader')}?` +
-            `{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`,
-          ),
+          use: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: true,
+                  localIdentName: '[local]___[hash:base64:5]',
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: postcssOptions,
+              },
+              {
+                loader: 'less-loader',
+                options: {
+                  sourceMap: true,
+                  modifyVars: theme,
+                },
+              },
+            ],
+          }),
         },
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-          loader: `${require.resolve('url-loader')}?` +
-          `limit=10000&minetype=application/font-woff`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            minetype: 'application/font-woff',
+          },
         },
         {
           test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-          loader: `${require.resolve('url-loader')}?` +
-          `limit=10000&minetype=application/font-woff`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            minetype: 'application/font-woff',
+          },
         },
         {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          loader: `${require.resolve('url-loader')}?` +
-          `limit=10000&minetype=application/octet-stream`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            minetype: 'application/octet-stream',
+          },
         },
         { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-          loader: `${require.resolve('url-loader')}?` +
-        `limit=10000&minetype=application/vnd.ms-fontobject`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            minetype: 'application/vnd.ms-fontobject',
+          },
         },
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: `${require.resolve('url-loader')}?` +
-          `limit=10000&minetype=image/svg+xml`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            minetype: 'image/svg+xml',
+          },
         },
         {
           test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
-          loader: `${require.resolve('url-loader')}?limit=10000`,
-        },
-        {
-          test: /\.json$/,
-          loader: `${require.resolve('json-loader')}`,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          },
         },
         {
           test: /\.html?$/,
-          loader: `${require.resolve('file-loader')}?name=[name].[ext]`,
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
         },
       ],
     },
 
-    postcss: [
-      rucksack(),
-      autoprefixer({
-        browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
-      }),
-    ],
-
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin('common', commonName),
-      new ExtractTextPlugin(cssFileName, {
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'common',
+        filename: commonName,
+      }),
+      new ExtractTextPlugin({
+        filename: cssFileName,
         disable: false,
         allChunks: true,
       }),
-      new webpack.optimize.OccurenceOrderPlugin(),
       new CaseSensitivePathsPlugin(),
       new FriendlyErrorsWebpackPlugin({
         onErrors: (severity, errors) => {
