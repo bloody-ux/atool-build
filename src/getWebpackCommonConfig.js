@@ -1,4 +1,5 @@
-import webpack from 'webpack';
+import webpack, { ProgressPlugin } from 'webpack';
+import chalk from 'chalk';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { existsSync } from 'fs';
@@ -13,15 +14,15 @@ import getTSCommonConfig from './getTSCommonConfig';
 
 /* eslint quotes:0 */
 
-export default function getWebpackCommonConfig(args) {
-  const pkgPath = join(args.cwd, 'package.json');
+export default function getWebpackCommonConfig(compiler, options) {
+  const pkgPath = join(options.cwd, 'package.json');
   const pkg = existsSync(pkgPath) ? require(pkgPath) : {};
 
-  const jsFileName = args.hash ? '[name]-[chunkhash].js' : '[name].js';
-  const cssFileName = args.hash ? '[name]-[chunkhash].css' : '[name].css';
-  const commonName = args.hash ? 'common-[chunkhash].js' : 'common.js';
+  const jsFileName = options.hash ? '[name]-[chunkhash].js' : '[name].js';
+  const cssFileName = options.hash ? '[name]-[chunkhash].css' : '[name].css';
+  const commonName = options.hash ? '[name]-[chunkhash].js' : '[name].js';
 
-  const silent = args.silent === true;
+  const silent = options.silent === true;
   const babelQuery = getBabelCommonConfig();
   const tsQuery = getTSCommonConfig();
   tsQuery.declaration = false;
@@ -40,7 +41,7 @@ export default function getWebpackCommonConfig(args) {
     let cfgPath = pkg.theme;
     // relative path
     if (cfgPath.charAt(0) === '.') {
-      cfgPath = resolve(args.cwd, cfgPath);
+      cfgPath = resolve(options.cwd, cfgPath);
     }
     const getThemeConfig = require(cfgPath);
     theme = getThemeConfig();
@@ -70,6 +71,88 @@ export default function getWebpackCommonConfig(args) {
     return obj;
   }, {});
 
+  const plugins = [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common',
+      filename: commonName,
+    }),
+    new ExtractTextPlugin({
+      filename: cssFileName,
+      disable: false,
+      allChunks: true,
+    }),
+    new CaseSensitivePathsPlugin(),
+    new FriendlyErrorsWebpackPlugin({
+      onErrors: (severity, errors) => {
+        if (silent) return;
+        if (severity !== 'error') {
+          notifier.notify({
+            title: 'ant tool',
+            message: 'warn',
+            contentImage: join(__dirname, '../assets/warn.png'),
+            sound: 'Glass',
+          });
+          return;
+        }
+        const error = errors[0];
+        notifier.notify({
+          title: 'ant tool',
+          message: `${severity} : ${error.name}`,
+          subtitle: error.file || '',
+          contentImage: join(__dirname, '../assets/fail.png'),
+          sound: 'Glass',
+        });
+      },
+    }),
+  ];
+
+  if (options.compress && !compiler.options.watch) {
+    plugins.push(
+      new webpack.optimize.UglifyJsPlugin({
+        output: {
+          ascii_only: true,
+        },
+        compress: {
+          warnings: false,
+        },
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      }),
+    );
+  } else {
+    plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      }),
+    );
+  }
+
+  if (options.build) {
+    plugins.push(
+      new webpack.NoEmitOnErrorsPlugin(),
+      new ProgressPlugin((percentage, msg) => {
+        const stream = process.stderr;
+        if (stream.isTTY && percentage < 0.71) {
+          stream.cursorTo(0);
+          stream.write(`📦  ${chalk.magenta(msg)}`);
+          stream.clearLine(1);
+        } else if (percentage === 1) {
+          console.log(chalk.green('\nwebpack: bundle build is now finished.'));
+        }
+      }),
+    );
+  }
+
+  if (options.hash) {
+    plugins.push(
+      require('map-json-webpack-plugin')({
+        assetsPath: pkg.name,
+        cache: {},
+      }),
+    );
+  }
+
   return {
     output: {
       path: join(process.cwd(), './dist/'),
@@ -77,7 +160,7 @@ export default function getWebpackCommonConfig(args) {
       chunkFilename: jsFileName,
     },
 
-    devtool: args.devtool,
+    devtool: options.devtool,
 
     resolve: {
       modules: ['node_modules', join(__dirname, '../node_modules')],
@@ -259,39 +342,6 @@ export default function getWebpackCommonConfig(args) {
       ],
     },
 
-    plugins: [
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'common',
-        filename: commonName,
-      }),
-      new ExtractTextPlugin({
-        filename: cssFileName,
-        disable: false,
-        allChunks: true,
-      }),
-      new CaseSensitivePathsPlugin(),
-      new FriendlyErrorsWebpackPlugin({
-        onErrors: (severity, errors) => {
-          if (silent) return;
-          if (severity !== 'error') {
-            notifier.notify({
-              title: 'ant tool',
-              message: 'warn',
-              contentImage: join(__dirname, '../assets/warn.png'),
-              sound: 'Glass',
-            });
-            return;
-          }
-          const error = errors[0];
-          notifier.notify({
-            title: 'ant tool',
-            message: `${severity} : ${error.name}`,
-            subtitle: error.file || '',
-            contentImage: join(__dirname, '../assets/fail.png'),
-            sound: 'Glass',
-          });
-        },
-      }),
-    ],
+    plugins,
   };
 }
