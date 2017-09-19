@@ -84,12 +84,4 @@ module.exports = function(webpackConfig) {
 
 > 为什么 TypeScript 错误不会显示？
 
-在 `webpack.config.js` 中配置：
-
-```javascript
-module.exports = function(webpack) {
-  webpack.ts.transpileOnly = false;
-}
-```
-
-关闭这个选项后如果项目较大，构建速度会变慢，可以在开发环境打开，发布的时候再关闭。
+自行添加 [fork-ts-checker-webpack-plugin](https://github.com/Realytics/fork-ts-checker-webpack-plugin)
