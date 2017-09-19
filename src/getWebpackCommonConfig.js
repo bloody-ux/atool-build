@@ -70,7 +70,7 @@ export default function getWebpackCommonConfig(args) {
     return obj;
   }, {});
 
-  return {
+  const config = {
     output: {
       path: join(process.cwd(), './dist/'),
       filename: jsFileName,
@@ -91,28 +91,6 @@ export default function getWebpackCommonConfig(args) {
     module: {
       noParse: [/moment.js/],
       rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          options: babelQuery,
-        },
-        {
-          test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: babelQuery,
-            },
-            {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true,
-                compilerOptions: tsQuery,
-              },
-            },
-          ],
-        },
         {
           test(filePath) {
             return /\.css$/.test(filePath) && !/\.module\.css$/.test(filePath);
@@ -294,4 +272,38 @@ export default function getWebpackCommonConfig(args) {
       }),
     ],
   };
+
+  Object.defineProperty(config, 'babel', {
+    enumerable: false,
+    get() {
+      return babelQuery;
+    },
+  });
+
+  config.module.rules.push(
+    {
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+      options: config.babel,
+    },
+    {
+      test: /\.tsx?$/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: config.babel,
+        },
+        {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: tsQuery,
+          },
+        },
+      ],
+    },
+  );
+
+  return config;
 }

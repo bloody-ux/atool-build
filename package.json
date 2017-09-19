@@ -64,6 +64,7 @@
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-istanbul": "^0.12.2",
+    "babel-plugin-hello-world": "^1.0.0",
     "coveralls": "~2.13.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
