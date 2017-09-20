@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import { existsSync } from 'fs';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import rucksack from 'rucksack-css';
 import autoprefixer from 'autoprefixer';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
@@ -20,7 +20,7 @@ export default function getWebpackCommonConfig(args) {
   const commonName = args.hash ? 'common-[chunkhash].js' : 'common.js';
 
   const silent = args.silent === true;
-  const babelQuery = getBabelCommonConfig();
+  const babelOptions = getBabelCommonConfig();
 
   const postcssOptions = {
     plugins: [
@@ -30,19 +30,6 @@ export default function getWebpackCommonConfig(args) {
       }),
     ],
   };
-
-  let theme = {};
-  if (pkg.theme && typeof pkg.theme === 'string') {
-    let cfgPath = pkg.theme;
-    // relative path
-    if (cfgPath.charAt(0) === '.') {
-      cfgPath = resolve(args.cwd, cfgPath);
-    }
-    const getThemeConfig = require(cfgPath);
-    theme = getThemeConfig();
-  } else if (pkg.theme && typeof pkg.theme === 'object') {
-    theme = pkg.theme;
-  }
 
   const emptyBuildins = [
     'child_process',
@@ -67,7 +54,8 @@ export default function getWebpackCommonConfig(args) {
   }, {});
 
   const config = {
-    babel: babelQuery,
+    babel: babelOptions,
+    postcss: postcssOptions,
 
     output: {
       path: join(process.cwd(), './dist/'),
@@ -89,96 +77,7 @@ export default function getWebpackCommonConfig(args) {
     module: {
       noParse: [/moment.js/],
       rules: [
-        {
-          test(filePath) {
-            return /\.css$/.test(filePath) && !/\.module\.css$/.test(filePath);
-          },
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: postcssOptions,
-              },
-            ],
-          }),
-        },
-        {
-          test: /\.module\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                  modules: true,
-                  localIdentName: '[local]___[hash:base64:5]',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: postcssOptions,
-              },
-            ],
-          }),
-        },
-        {
-          test(filePath) {
-            return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
-          },
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: postcssOptions,
-              },
-              {
-                loader: 'less-loader',
-                options: {
-                  sourceMap: true,
-                  modifyVars: theme,
-                },
-              },
-            ],
-          }),
-        },
-        {
-          test: /\.module\.less$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                  modules: true,
-                  localIdentName: '[local]___[hash:base64:5]',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: postcssOptions,
-              },
-              {
-                loader: 'less-loader',
-                options: {
-                  sourceMap: true,
-                  modifyVars: theme,
-                },
-              },
-            ],
-          }),
-        },
+
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
