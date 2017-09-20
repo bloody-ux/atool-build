@@ -95,11 +95,11 @@ export default function build(args, callback) {
 
   webpackConfig.forEach((config) => {
     config.plugins.push(
-      new ProgressPlugin((percentage, msg) => {
+      new ProgressPlugin((percentage, msg, addInfo) => {
         const stream = process.stderr;
         if (stream.isTTY && percentage < 0.71) {
           stream.cursorTo(0);
-          stream.write(`📦  ${chalk.magenta(msg)}`);
+          stream.write(`📦  ${chalk.magenta(msg)} (${chalk.magenta(addInfo)})`);
           stream.clearLine(1);
         } else if (percentage === 1) {
           console.log(chalk.green('\nwebpack: bundle build is now finished.'));
