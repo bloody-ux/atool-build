@@ -119,9 +119,7 @@ export default function build(args, callback) {
 
     const { errors } = stats.toJson();
     if (errors && errors.length) {
-      process.on('exit', () => {
-        process.exit(1);
-      });
+      callback(errors);
     }
     // if watch enabled only stats.hasErrors would log info
     // otherwise  would always log info
@@ -149,13 +147,6 @@ export default function build(args, callback) {
           });
         }
       }
-    }
-
-    if (err) {
-      process.on('exit', () => {
-        process.exit(1);
-      });
-      console.error(err);
     }
 
     if (callback) {

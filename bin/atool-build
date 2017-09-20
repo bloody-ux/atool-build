@@ -21,7 +21,11 @@ program.cwd = process.cwd();
 if (program.watch) {
   require('../lib/build')(program);
 } else {
-  require('../lib/build')(program, function () {
+  require('../lib/build')(program, function (err) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
     process.exit(0);
   });
 }
