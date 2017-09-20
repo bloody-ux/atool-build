@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import notifier from 'node-notifier';
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
+import injectBabelConfig from './injectBabelConfig';
 
 function checkConfig(webpackConfig) {
   const config = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
@@ -87,6 +88,7 @@ export default function build(args, callback) {
 
   let fileOutputPath;
   webpackConfig.forEach((config) => {
+    injectBabelConfig(config);
     fileOutputPath = config.output.path;
   });
 

@@ -9,8 +9,6 @@ import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import notifier from 'node-notifier';
 
 import getBabelCommonConfig from './getBabelCommonConfig';
-import getTSCommonConfig from './getTSCommonConfig';
-
 /* eslint quotes:0 */
 
 export default function getWebpackCommonConfig(args) {
@@ -23,8 +21,6 @@ export default function getWebpackCommonConfig(args) {
 
   const silent = args.silent === true;
   const babelQuery = getBabelCommonConfig();
-  const tsQuery = getTSCommonConfig();
-  tsQuery.declaration = false;
 
   const postcssOptions = {
     plugins: [
@@ -71,6 +67,8 @@ export default function getWebpackCommonConfig(args) {
   }, {});
 
   const config = {
+    babel: babelQuery,
+
     output: {
       path: join(process.cwd(), './dist/'),
       filename: jsFileName,
@@ -272,38 +270,6 @@ export default function getWebpackCommonConfig(args) {
       }),
     ],
   };
-
-  Object.defineProperty(config, 'babel', {
-    enumerable: false,
-    get() {
-      return babelQuery;
-    },
-  });
-
-  config.module.rules.push(
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: config.babel,
-    },
-    {
-      test: /\.tsx?$/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: config.babel,
-        },
-        {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
-            compilerOptions: tsQuery,
-          },
-        },
-      ],
-    },
-  );
 
   return config;
 }
