@@ -11,7 +11,7 @@ program
   .option('--devtool <devtool>', 'sourcemap generate method, default is null')
   .option('--config <path>', 'custom config path, default is webpack.config.js')
   .option('--no-compress', 'build without compress')
-  .option('--silent', 'close notifier')
+  .option('--notify', 'activates notifications for build results')
   .option('--json', 'running webpack with --json, ex. result.json')
   .option('--verbose', 'run with more logging messages.')
   .parse(process.argv);

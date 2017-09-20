@@ -139,7 +139,7 @@ export default function build(args, callback) {
         console.error(buildInfo);
       } else {
         console.log(buildInfo);
-        if (args.silent !== true) {
+        if (args.notify === true) {
           notifier.notify({
             title: 'ant tool',
             message: 'done',

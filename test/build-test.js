@@ -113,8 +113,8 @@ describe('lib/build', function () {
         expect(err.message).toEqual('no webpack entry found');
       });
   });
-  it('should support silent', () => {
-    return testBuild({ hash: true, silent: true }, 'build-normal');
+  it('should support notify', () => {
+    return testBuild({ hash: true, notify: true }, 'build-normal');
   });
   it('should custom babel', () => {
     return testBuild({}, 'build-mergeCustomConfig-babel');
