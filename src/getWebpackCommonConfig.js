@@ -23,6 +23,7 @@ export default function getWebpackCommonConfig(args) {
   const babelOptions = getBabelCommonConfig();
 
   const postcssOptions = {
+    sourceMap: true,
     plugins: [
       rucksack(),
       autoprefixer({
