@@ -10,8 +10,5 @@
     "max-len": [2, 120, 2],
     "global-require": [0],
     "import/no-dynamic-require": [0]
-  },
-  "ecmaFeatures": {
-    "experimentalObjectRestSpread": true
   }
 }
