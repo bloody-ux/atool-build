@@ -36,6 +36,7 @@ function getWebpackConfig(args, cache) {
   if (args.compress && !args.watch) {
     webpackConfig.plugins = [...webpackConfig.plugins,
       new webpack.optimize.UglifyJsPlugin({
+        parallel: true,
         output: {
           ascii_only: true,
         },
