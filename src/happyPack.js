@@ -15,6 +15,7 @@ const getId = () => {
 function parallelizeLoader(plugins = [], rule) {
   // not in the multi-thread mapping list
   if (!rule.parallel) return;
+  delete rule.parallel;
 
   let loaders = null;
   if (Array.isArray(rule.use)) {
