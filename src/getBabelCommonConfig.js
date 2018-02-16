@@ -18,7 +18,7 @@ export default function babel(pkg) {
     plugins: [
       require.resolve('babel-plugin-add-module-exports'),
       require.resolve('babel-plugin-transform-decorators-legacy'),
-      [require.resolve('transform-flow-interface-imports'), flowOptions],
+      [require.resolve('babel-plugin-transform-flow-interface-imports'), flowOptions],
     ],
   };
 }
