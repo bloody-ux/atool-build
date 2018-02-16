@@ -19,8 +19,8 @@
       "type": "node",
       "request": "launch",
       "name": "debug",
-      "program": "${workspaceFolder}/bin/atool-build"
+      "program": "${workspaceFolder}/bin/thebes"
     }
   ]
-  
+
 }

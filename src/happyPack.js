@@ -12,6 +12,18 @@ const getId = () => {
   return `parallel${seed}`;
 };
 
+export function parallelizeStyle(loaders = [], plugins = []) {
+  const id = getId();
+
+  plugins.push(new HappyPack({
+    ...options,
+    id,
+    loaders,
+  }));
+
+  return `happypack/loader?id=${id}`;
+}
+
 function parallelizeLoader(plugins = [], rule) {
   // not in the multi-thread mapping list
   if (!rule.parallel) return;

@@ -2,6 +2,7 @@ import { existsSync } from 'fs';
 import { join, resolve } from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import getTSCommonConfig from './getTSCommonConfig';
+import { parallelizeStyle } from './happyPack';
 
 const tsQuery = getTSCommonConfig();
 
@@ -27,12 +28,11 @@ function injectPostcssOptions(webpackConfig, args) {
 
   webpackConfig.module.rules.push(
     {
-      parallel: true,
       test(filePath) {
         return /\.css$/.test(filePath) && !/\.module\.css$/.test(filePath);
       },
       use: ExtractTextPlugin.extract({
-        use: [
+        use: parallelizeStyle([
           {
             loader: 'css-loader',
             options: {
@@ -44,13 +44,14 @@ function injectPostcssOptions(webpackConfig, args) {
             options: postcssOptions,
           },
         ],
+        webpackConfig.plugins,
+        ),
       }),
     },
     {
-      parallel: true,
       test: /\.module\.css$/,
       use: ExtractTextPlugin.extract({
-        use: [
+        use: parallelizeStyle([
           {
             loader: 'css-loader',
             options: {
@@ -64,15 +65,16 @@ function injectPostcssOptions(webpackConfig, args) {
             options: postcssOptions,
           },
         ],
+        webpackConfig.plugins,
+        ),
       }),
     },
     {
-      parallel: true,
       test(filePath) {
         return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
       },
       use: ExtractTextPlugin.extract({
-        use: [
+        use: parallelizeStyle([
           {
             loader: 'css-loader',
             options: {
@@ -91,13 +93,14 @@ function injectPostcssOptions(webpackConfig, args) {
             },
           },
         ],
+        webpackConfig.plugins,
+        ),
       }),
     },
     {
-      parallel: true,
       test: /\.module\.less$/,
       use: ExtractTextPlugin.extract({
-        use: [
+        use: parallelizeStyle([
           {
             loader: 'css-loader',
             options: {
@@ -118,6 +121,8 @@ function injectPostcssOptions(webpackConfig, args) {
             },
           },
         ],
+        webpackConfig.plugins,
+        ),
       }),
     },
   );
