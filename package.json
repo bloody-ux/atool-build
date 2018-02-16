@@ -4,16 +4,16 @@
   "description": "Build tool based on webpack",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bloody-ux/atool-build"
+    "url": "https://github.com/bloody-ux/thebes"
   },
-  "homepage": "https://github.com/bloody-ux/atool-build",
+  "homepage": "https://github.com/bloody-ux/thebes",
   "author": "nada <bloody-ux@126.com>",
   "license": "MIT",
   "bin": {
     "thebes": "./bin/thebes"
   },
   "entry": {
-    "a": "index.js"
+    "test": "index.js"
   },
   "files": [
     "bin",

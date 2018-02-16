@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var chalk = require('chalk');
+const program = require('commander');
+const chalk = require('chalk');
 
 program
   .version(require('../package').version, '-v, --version')
@@ -27,7 +27,7 @@ if (program.silent === true) {
 if (program.watch) {
   require('../lib/build')(program);
 } else {
-  require('../lib/build')(program, function (err) {
+  require('../lib/build')(program, (err) => {
     if (err) {
       console.error(err);
       process.exit(1);
