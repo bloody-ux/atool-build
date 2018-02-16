@@ -1,6 +1,9 @@
 import HappyPack from 'happypack';
+import { cpus } from 'os';
 
-const happyThreadPool = HappyPack.ThreadPool({ size: 8 });
+const theadCount = Math.max(1, cpus().length - 1);
+const useParallel = theadCount > 1;
+const happyThreadPool = HappyPack.ThreadPool({ size: theadCount });
 
 const options = {
   threadPool: happyThreadPool,
@@ -13,6 +16,8 @@ const getId = () => {
 };
 
 export function parallelizeStyle(loaders = [], plugins = []) {
+  if (!useParallel) return loaders;
+
   const id = getId();
 
   plugins.push(new HappyPack({
@@ -29,6 +34,8 @@ function parallelizeLoader(plugins = [], rule) {
   if (!rule.parallel) return;
   delete rule.parallel;
 
+  if (!useParallel) return;
+
   let loaders = null;
   if (Array.isArray(rule.use)) {
     loaders = rule.use;
@@ -42,6 +49,10 @@ function parallelizeLoader(plugins = [], rule) {
 
     delete rule.loader;
     delete rule.options;
+  } else if (typeof rule.loaders !== 'undefined') {
+    loaders = rule.loaders;
+
+    delete rule.loaders;
   }
 
   if (!loaders) return; // not use/loader

@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
 import { writeFileSync } from 'fs';
+import { tmpdir } from 'os';
 import webpack, { ProgressPlugin } from 'webpack';
 import chalk from 'chalk';
 import notifier from 'node-notifier';
@@ -39,6 +40,7 @@ function getWebpackConfig(args, cache) {
   if (args.compress && !args.watch) {
     webpackConfig.plugins = [...webpackConfig.plugins,
       new ParallelUglifyPlugin({
+        cacheDir: tmpdir(),
         uglifyJS: {
           output: {
             ascii_only: true,
