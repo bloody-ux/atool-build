@@ -1,4 +1,4 @@
 
 export default {
-  shout() { console.log('a'); }
-}
+  shout() { console.log('a'); },
+};

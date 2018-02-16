@@ -1,5 +1,5 @@
 
-export default function customConfig(webpackConfig,environment) {
+export default function customConfig(webpackConfig, environment) {
   if (environment === 'development') {
     webpackConfig.a = 'd';
   } else {
@@ -7,4 +7,4 @@ export default function customConfig(webpackConfig,environment) {
   }
 
   return webpackConfig;
-};
+}

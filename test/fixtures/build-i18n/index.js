@@ -1,3 +1,5 @@
 
-console.log(__("Hello World"));
-console.log(__("Missing Text"));
+// eslint-disable-next-line
+console.log(__('Hello World'));
+// eslint-disable-next-line
+console.log(__('Missing Text'));

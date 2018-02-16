@@ -1,3 +1,3 @@
-module.exports = function(webpackConfig, environment) {
+module.exports = function(webpackConfig) {
   return webpackConfig;
-}
+};

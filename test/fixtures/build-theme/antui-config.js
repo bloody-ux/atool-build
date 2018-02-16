@@ -1,5 +1,5 @@
 module.exports = function() {
   return {
-    '@buttonTxtColor': '#333333'
+    '@buttonTxtColor': '#333333',
   };
 };

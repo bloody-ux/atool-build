@@ -1,4 +1,4 @@
-module.exports = function(webpackConfig, environment) {
+module.exports = function(webpackConfig) {
   webpackConfig.plugins = [];
   return webpackConfig;
-}
+};
