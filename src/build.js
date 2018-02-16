@@ -3,6 +3,8 @@ import { writeFileSync } from 'fs';
 import webpack, { ProgressPlugin } from 'webpack';
 import chalk from 'chalk';
 import notifier from 'node-notifier';
+import ParallelUglifyPlugin from 'webpack-parallel-uglify-plugin';
+
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
 import injectLoaderOptions from './injectLoaderOptions';
@@ -36,13 +38,14 @@ function getWebpackConfig(args, cache) {
   // Watch mode should not use UglifyJsPlugin
   if (args.compress && !args.watch) {
     webpackConfig.plugins = [...webpackConfig.plugins,
-      new webpack.optimize.UglifyJsPlugin({
-        parallel: true,
-        output: {
-          ascii_only: true,
-        },
-        compress: {
-          warnings: false,
+      new ParallelUglifyPlugin({
+        uglifyJS: {
+          output: {
+            ascii_only: true,
+          },
+          compress: {
+            warnings: false,
+          },
         },
       }),
       new webpack.DefinePlugin({
