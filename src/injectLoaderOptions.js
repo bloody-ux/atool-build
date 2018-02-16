@@ -27,6 +27,7 @@ function injectPostcssOptions(webpackConfig, args) {
 
   webpackConfig.module.rules.push(
     {
+      parallel: true,
       test(filePath) {
         return /\.css$/.test(filePath) && !/\.module\.css$/.test(filePath);
       },
@@ -46,6 +47,7 @@ function injectPostcssOptions(webpackConfig, args) {
       }),
     },
     {
+      parallel: true,
       test: /\.module\.css$/,
       use: ExtractTextPlugin.extract({
         use: [
@@ -65,6 +67,7 @@ function injectPostcssOptions(webpackConfig, args) {
       }),
     },
     {
+      parallel: true,
       test(filePath) {
         return /\.less$/.test(filePath) && !/\.module\.less$/.test(filePath);
       },
@@ -91,6 +94,7 @@ function injectPostcssOptions(webpackConfig, args) {
       }),
     },
     {
+      parallel: true,
       test: /\.module\.less$/,
       use: ExtractTextPlugin.extract({
         use: [
@@ -125,12 +129,14 @@ function injectBabelOptions(webpackConfig) {
 
   webpackConfig.module.rules.push(
     {
+      parallel: true,
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'babel-loader',
       options: babelOptions,
     },
     {
+      parallel: true,
       test: /\.tsx?$/,
       use: [
         {

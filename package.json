@@ -1,16 +1,19 @@
 {
-  "name": "atool-build",
-  "version": "2.0.0-alpha.12",
+  "name": "thebes",
+  "version": "0.0.1",
   "description": "Build tool based on webpack",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ant-tool/atool-build"
+    "url": "https://github.com/bloody-ux/atool-build"
   },
-  "homepage": "https://github.com/ant-tool/atool-build",
-  "author": "chencheng <sorrycc@gmail.com>",
+  "homepage": "https://github.com/bloody-ux/atool-build",
+  "author": "nada <bloody-ux@126.com>",
   "license": "MIT",
   "bin": {
-    "atool-build": "./bin/atool-build"
+    "thebes": "./bin/thebes"
+  },
+  "entry": {
+    "a": "index.js"
   },
   "files": [
     "bin",
@@ -45,6 +48,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "~0.11.1",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "happypack": "^4.0.1",
     "json-loader": "~0.5.4",
     "less": "~2.7.2",
     "less-loader": "~4.0.5",

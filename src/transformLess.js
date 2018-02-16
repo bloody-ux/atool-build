@@ -11,7 +11,7 @@ function transformLess(lessFile, config = {}) {
   const resolvedLessFile = path.resolve(cwd, lessFile);
 
   let data = readFileSync(resolvedLessFile, 'utf-8');
-  data = data.replace(/^\uFEFF/, '');
+  data = data.replace(/^\uFEFF/, ''); // 解决BOM问题
 
   return new Promise((resolve, reject) => {
     // Do less compile

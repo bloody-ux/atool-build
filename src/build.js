@@ -6,6 +6,7 @@ import notifier from 'node-notifier';
 import mergeCustomConfig from './mergeCustomConfig';
 import getWebpackCommonConfig from './getWebpackCommonConfig';
 import injectLoaderOptions from './injectLoaderOptions';
+import parallelize from './happyPack';
 
 function checkConfig(webpackConfig) {
   const config = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
@@ -73,12 +74,16 @@ function getWebpackConfig(args, cache) {
     ];
   }
 
+  injectLoaderOptions(webpackConfig, args);
+
   if (typeof args.config === 'function') {
     webpackConfig = args.config(webpackConfig) || webpackConfig;
   } else {
     webpackConfig = mergeCustomConfig(webpackConfig, resolve(args.cwd, args.config || 'webpack.config.js'));
   }
+
   checkConfig(webpackConfig);
+
   return webpackConfig;
 }
 
@@ -87,12 +92,13 @@ export default function build(args, callback) {
   let webpackConfig = getWebpackConfig(args, {});
   webpackConfig = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
 
+  // enabled parallel loaders
+  parallelize(webpackConfig);
+
   let fileOutputPath;
   webpackConfig.forEach((config) => {
-    injectLoaderOptions(config, args);
     fileOutputPath = config.output.path;
   });
-
 
   webpackConfig.forEach((config) => {
     config.plugins.push(
