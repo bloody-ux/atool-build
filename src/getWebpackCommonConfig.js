@@ -20,7 +20,7 @@ export default function getWebpackCommonConfig(args) {
   const commonName = args.hash ? 'common-[chunkhash].js' : 'common.js';
 
   const silent = args.silent === true;
-  const babelOptions = getBabelCommonConfig();
+  const babelOptions = getBabelCommonConfig(pkg);
 
   const postcssOptions = {
     sourceMap: true,
