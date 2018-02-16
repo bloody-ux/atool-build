@@ -1,4 +1,4 @@
-# atool-build
+# thebes
 
 [![NPM version](https://img.shields.io/npm/v/atool-build.svg?style=flat)](https://npmjs.org/package/atool-build)
 [![Build Status](https://img.shields.io/travis/ant-tool/atool-build.svg?style=flat)](https://travis-ci.org/ant-tool/atool-build)
@@ -12,30 +12,31 @@
 
 ## 特性
 
-- 基于 webpack 实现
+- 基于 webpack 3.x实现
 - 支持通过 `webpack.config.js` 进行扩展 webpack 的配置项
 - 支持 [stage-0](https://babeljs.io/docs/plugins/preset-stage-0), [es2015](https://babeljs.io/docs/plugins/preset-es2015), react 和 less
 - 支持 hash 模式的构建, 并生成映射表 `map.json`
 - 支持 typescript
+- 并行构建以达到极速
 
 ## 安装
 
 ```bash
-$ npm i atool-build --save
+$ npm i thebes --save
 ```
 
 ## 使用
 
 ```bash
-$ atool-build [options]
+$ thebes [options]
 ```
 
 ### 命令行参数
 
 ```bash
-$ atool-build -h
+$ thebes -h
 
-  Usage: atool-build [options]
+  Usage: thebes [options]
 
   Options:
 
@@ -71,14 +72,14 @@ module.exports = function(webpackConfig) {
 - `webpackConfig` -- 默认配置, 修改后返回新的配置
 
 
-详细内容：[atool-build 基本使用](http://ant-tool.github.io/atool-build.html)
+详细内容：[thebes 基本使用](http://ant-tool.github.io/atool-build.html)
 
 
 ## FAQ
 
 > 如何在 webpack.config.js 中引用 webpack ? (新增插件需要)
 
-`var webpack = require('atool-build/lib/webpack');`
+`var webpack = require('thebes/lib/webpack');`
 
 [#32](https://github.com/ant-tool/atool-build/issues/32)
 
