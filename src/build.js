@@ -74,8 +74,6 @@ function getWebpackConfig(args, cache) {
     ];
   }
 
-  injectLoaderOptions(webpackConfig, args);
-
   if (typeof args.config === 'function') {
     webpackConfig = args.config(webpackConfig) || webpackConfig;
   } else {
@@ -92,13 +90,14 @@ export default function build(args, callback) {
   let webpackConfig = getWebpackConfig(args, {});
   webpackConfig = Array.isArray(webpackConfig) ? webpackConfig : [webpackConfig];
 
-  // enabled parallel loaders
-  parallelize(webpackConfig);
-
   let fileOutputPath;
   webpackConfig.forEach((config) => {
+    injectLoaderOptions(config, args);
     fileOutputPath = config.output.path;
   });
+
+  // enabled parallel loaders
+  parallelize(webpackConfig);
 
   webpackConfig.forEach((config) => {
     config.plugins.push(
