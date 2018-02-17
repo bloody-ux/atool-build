@@ -35,33 +35,6 @@ function getWebpackConfig(args, cache) {
     webpackConfig.output.publicPath = args.publicPath;
   }
 
-  // Config if no --no-compress.
-  // Watch mode should not use UglifyJsPlugin
-  if (args.compress && !args.watch) {
-    webpackConfig.plugins = [...webpackConfig.plugins,
-      new ParallelUglifyPlugin({
-        cacheDir: tmpdir(),
-        uglifyJS: {
-          output: {
-            ascii_only: true,
-          },
-          compress: {
-            warnings: false,
-          },
-        },
-      }),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      }),
-    ];
-  } else {
-    webpackConfig.plugins = [...webpackConfig.plugins,
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      }),
-    ];
-  }
-
   webpackConfig.plugins = [...webpackConfig.plugins,
     new webpack.NoEmitOnErrorsPlugin(),
   ];
@@ -90,6 +63,36 @@ function getWebpackConfig(args, cache) {
   return webpackConfig;
 }
 
+function minify(args, webpackConfig) {
+  // Config if no --no-compress.
+  // Watch mode should not use UglifyJsPlugin
+  if (args.compress && !args.watch) {
+    webpackConfig.plugins = [...webpackConfig.plugins,
+      new ParallelUglifyPlugin({
+        sourceMap: !!webpackConfig.devtool,
+        cacheDir: tmpdir(),
+        uglifyJS: {
+          output: {
+            ascii_only: true,
+          },
+          compress: {
+            warnings: false,
+          },
+        },
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      }),
+    ];
+  } else {
+    webpackConfig.plugins = [...webpackConfig.plugins,
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      }),
+    ];
+  }
+}
+
 export default function build(args, callback) {
   // Get config.
   let webpackConfig = getWebpackConfig(args, {});
@@ -103,6 +106,9 @@ export default function build(args, callback) {
 
   // enabled parallel loaders
   parallelize(webpackConfig);
+
+  // added parallel uglify
+  minify(args, webpackConfig);
 
   webpackConfig.forEach((config) => {
     config.plugins.push(
