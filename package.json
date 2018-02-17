@@ -1,6 +1,6 @@
 {
   "name": "thebes",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Build tool based on webpack",
   "repository": {
     "type": "git",

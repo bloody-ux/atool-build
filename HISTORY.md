@@ -2,6 +2,8 @@
 
 ---
 
+## 0.0.12
+- supported sourcemap
 ## 0.0.9
 - fixed typo
 

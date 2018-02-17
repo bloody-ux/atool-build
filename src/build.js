@@ -102,13 +102,13 @@ export default function build(args, callback) {
   webpackConfig.forEach((config) => {
     injectLoaderOptions(config, args);
     fileOutputPath = config.output.path;
+
+    // added parallel uglify
+    minify(args, config);
   });
 
   // enabled parallel loaders
   parallelize(webpackConfig);
-
-  // added parallel uglify
-  minify(args, webpackConfig);
 
   webpackConfig.forEach((config) => {
     config.plugins.push(
